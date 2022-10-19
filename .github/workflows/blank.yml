@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Edit version in csproj
+        run: sed -i 's/<Version>.*<\/Version>/<Version>1.0.5<\/Version>/g' test.txt
+        shell: bash
+        
+      - name: Push
+        run: |
+          git config user.name ghdiscreet
+          git config user.email github@discreet.net
+          git remote set-url origin https://x-access-token:${{ secrets.AT }}@github.com/${{ github.repository }}
+          git add test.txt
+          git commit -m "Edited"
+          git fetch origin main
+          git push origin HEAD:main
+        shell: bash

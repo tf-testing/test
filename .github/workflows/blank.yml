@@ -17,11 +17,9 @@ jobs:
         
       - name: Push
         run: |
-          git config user.name ghdiscreet
-          git config user.email github@discreet.net
-          git remote set-url origin https://x-access-token:${{ secrets.AT }}@github.com/${{ github.repository }}
+          git config --local user.name github-actions
+          git config --local user.email github-actions@github.com
           git add test.txt
-          git commit -m "Edited"
-          git fetch origin main
-          git push origin HEAD:main
+          git commit -m "🖉 Update test.txt with ${GITHUB_REF#refs/*/}"
+          git push
         shell: bash

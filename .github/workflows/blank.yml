@@ -10,6 +10,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: main
+          token: ${{ secrets.AT }}
 
       - name: Edit version in csproj
         run: sed -i 's/<Version>.*<\/Version>/<Version>1.0.5<\/Version>/g' test.txt
